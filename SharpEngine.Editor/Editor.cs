@@ -12,8 +12,9 @@ namespace SharpEngine.Editor;
 
 public class Editor
 {
+    public static Core.Scene CurrentScene = new GameScene();
+    
     private readonly Window _window;
-    private readonly GameScene _scene = new();
     private RenderTexture2D _renderTexture;
     private int _windowSizeX;
     private int _windowSizeY;
@@ -31,6 +32,7 @@ public class Editor
         {
             RenderImGui = RenderImGui
         };
+        Raylib.MaximizeWindow();
         ImGui.GetIO().ConfigFlags |= ImGuiConfigFlags.DockingEnable;
 
         _windowSizeX = 900;
@@ -43,7 +45,7 @@ public class Editor
     public void Load()
     {
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Loading...");
-        _scene.Load();
+        CurrentScene.Load();
         _renderTexture = Raylib.LoadRenderTexture(900, 600);
         
         _mainMenuBar = new MainMenuBar();
@@ -58,13 +60,13 @@ public class Editor
     {
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Unloading...");
         Raylib.UnloadRenderTexture(_renderTexture);
-        _scene.Unload();
+        CurrentScene.Unload();
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Unloaded !");
     }
 
-    private void RenderGameScene(Window window)
+    private void RenderCurrentScene(Window window)
     {
-        _scene.Draw();
+        CurrentScene.Draw();
         
         Raylib.BeginTextureMode(_renderTexture);
         Raylib.ClearBackground(Color.RED);
@@ -83,7 +85,7 @@ public class Editor
         }
         
         // Render Current Scene
-        RenderGameScene(window);
+        RenderCurrentScene(window);
         
         // Create ImGui
         _mainMenuBar?.Render();
