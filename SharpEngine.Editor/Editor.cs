@@ -38,6 +38,8 @@ public class Editor
         _windowSizeX = 900;
         _windowSizeY = 600;
         _window.AddScene(new EditorScene(this));
+
+        CurrentScene.Window = _window;
         
         _window.Run();
     }
