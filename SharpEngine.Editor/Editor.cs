@@ -12,7 +12,7 @@ namespace SharpEngine.Editor;
 
 public class Editor
 {
-    public static Core.Scene CurrentScene = new GameScene();
+    public static readonly Core.Scene CurrentScene = new GameScene();
     
     private readonly Window _window;
     private RenderTexture2D _renderTexture;

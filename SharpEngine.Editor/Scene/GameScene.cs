@@ -12,12 +12,12 @@ public class GameScene: Core.Scene
     {
         var e = new Entity
         {
-            Tag = "Rect"
+            Name = "Red Rect"
         };
         e.AddComponent(new TransformComponent(new Vec2(60)));
         e.AddComponent(new RectComponent(Color.Cyan, new Vec2(50)));
         AddEntity(e);
 
-        AddWidget(new Label(new Vec2(300), "Heyo", "RAYLIB_DEFAULT", fontSize: 30, zLayer: 30));
+        AddWidget(new Label(new Vec2(300), "Heyo", "RAYLIB_DEFAULT", color: Color.Black, fontSize: 30, zLayer: 30)).Name = "Title";
     }
 }
