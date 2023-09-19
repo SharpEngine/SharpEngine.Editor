@@ -8,14 +8,18 @@ public class SceneTree: GuiObject
     {
         if (ImGui.Begin("Screen Tree"))
         {
-            foreach (var entity in Editor.CurrentScene.Entities)
-                ImGui.Text(entity.Tag);
-            
-            ImGui.Separator();
-            
-            foreach (var widget in Editor.CurrentScene.Widgets)
-                ImGui.Text(widget.Position.ToString());
-            
+            if (ImGui.CollapsingHeader("Entities", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                foreach (var entity in Editor.CurrentScene.Entities)
+                    ImGui.Text(entity.Name);
+            }
+
+            if (ImGui.CollapsingHeader("Widgets", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                foreach (var widget in Editor.CurrentScene.Widgets)
+                    ImGui.Text(widget.Name);
+            }
+
             ImGui.End();
         }
     }
