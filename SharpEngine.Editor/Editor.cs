@@ -22,7 +22,7 @@ public class Editor
     private MainMenuBar? _mainMenuBar;
     private RenderWindow? _renderWindow;
     private Properties? _properties;
-    private SceneTree? _sceneTree;
+    private Objects? _sceneTree;
     private AssetsExplorer? _assetsExplorer;
     
     public Editor()
@@ -53,7 +53,7 @@ public class Editor
         _mainMenuBar = new MainMenuBar();
         _renderWindow = new RenderWindow(_window.SeImGui, _renderTexture);
         _properties = new Properties();
-        _sceneTree = new SceneTree();
+        _sceneTree = new Objects();
         _assetsExplorer = new AssetsExplorer();
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Loaded !");
     }
