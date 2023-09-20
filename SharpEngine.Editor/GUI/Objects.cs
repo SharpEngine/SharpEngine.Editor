@@ -22,13 +22,6 @@ public class Objects: GuiObject
                         Properties.Selected = widget;
             }
 
-            if (ImGui.CollapsingHeader("Others", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                ImGui.Selectable("Camera");
-                ImGui.Selectable("Scene");
-                ImGui.Selectable("Window");
-            }
-
             ImGui.End();
         }
     }
