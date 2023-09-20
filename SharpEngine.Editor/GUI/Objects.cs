@@ -2,22 +2,24 @@ using ImGuiNET;
 
 namespace SharpEngine.Editor.GUI;
 
-public class SceneTree: GuiObject
+public class Objects: GuiObject
 {
     public override void Render()
     {
-        if (ImGui.Begin("Screen Tree"))
+        if (ImGui.Begin("Objects"))
         {
             if (ImGui.CollapsingHeader("Entities", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 foreach (var entity in Editor.CurrentScene.Entities)
-                    ImGui.Text(entity.Name);
+                    if (ImGui.Selectable(entity.Name))
+                        Properties.Selected = entity;
             }
 
             if (ImGui.CollapsingHeader("Widgets", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 foreach (var widget in Editor.CurrentScene.Widgets)
-                    ImGui.Text(widget.Name);
+                    if (ImGui.Selectable(widget.Name))
+                        Properties.Selected = widget;
             }
 
             ImGui.End();
