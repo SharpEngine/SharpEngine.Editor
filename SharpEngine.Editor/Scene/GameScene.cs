@@ -12,7 +12,8 @@ public class GameScene: Core.Scene
     {
         var e = new Entity
         {
-            Name = "Red Rect"
+            Name = "Red Rect",
+            Tag = "Basic"
         };
         e.AddComponent(new TransformComponent(new Vec2(60)));
         e.AddComponent(new RectComponent(Color.Cyan, new Vec2(50)));
