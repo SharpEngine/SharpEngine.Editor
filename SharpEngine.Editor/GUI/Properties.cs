@@ -1,6 +1,7 @@
 using ImGuiNET;
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Widget;
+using SharpEngine.Editor.GUI.PropertiesExtensions;
 
 namespace SharpEngine.Editor.GUI;
 
@@ -12,19 +13,19 @@ public class Properties: GuiObject
     {
         if (ImGui.Begin("Properties"))
         {
-            if (Selected is Widget widget)
+            switch (Selected)
             {
-                ImGui.SetWindowFontScale(1.2f);
-                ImGui.Text($"Nom : {widget.Name}");
-                ImGui.SetWindowFontScale(1f);
+                case Entity entity:
+                    entity.DrawProperties();
+                    break;
+                case Label label:
+                    label.DrawProperties();
+                    break;
+                case Widget widget:
+                    widget.DrawProperties();
+                    break;
             }
-            else if (Selected is Entity entity)
-            {
-                ImGui.SetWindowFontScale(1.2f);
-                ImGui.Text($"Nom : {entity.Name}");
-                ImGui.SetWindowFontScale(1f);
-                ImGui.Text($"Tag : {entity.Tag}");
-            }
+
             ImGui.End();
         }
     }
