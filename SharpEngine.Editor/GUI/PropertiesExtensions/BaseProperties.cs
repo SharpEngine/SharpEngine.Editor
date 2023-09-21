@@ -30,8 +30,7 @@ public static class BaseProperties
     {
         var value = outValue.get().ToVec4();
         ImGui.ColorEdit4(label, ref value);
-        outValue.set(new Color((int)(value.X * byte.MaxValue), (int)(value.Y * byte.MaxValue),
-            (int)(value.Z * byte.MaxValue), (int)(value.W * byte.MaxValue)));
+        outValue.set(Color.FromVec4(value));
     }
     
     public static void InputFloat(string label, (Func<float> get, Action<float> set) outValue)
