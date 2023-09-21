@@ -22,7 +22,7 @@ public static class WidgetProperties
         ((Widget)label).DrawProperties();
         if (ImGui.CollapsingHeader("Label", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            BaseProperties.InputText("Text", (() => label.Text, x => label.Text = x));
+            BaseProperties.InputMultilineText("Text", (() => label.Text, x => label.Text = x));
             BaseProperties.InputFont("Font", (() => label.Font, x => label.Font = x));
             BaseProperties.InputColor("Font Color", (() => label.Color, x => label.Color = x));
             BaseProperties.InputInt("Rotation", (() => label.Rotation, x => label.Rotation = x));

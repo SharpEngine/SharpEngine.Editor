@@ -60,4 +60,11 @@ public static class BaseProperties
         ImGui.InputText(label, ref value, 40000 );
         outValue.set(value);
     }
+    
+    public static void InputMultilineText(string label, (Func<string> get, Action<string> set) outValue)
+    {
+        var value = outValue.get();
+        ImGui.InputTextMultiline(label, ref value, 999999, new Vector2(ImGui.GetContentRegionAvail().X, 200));
+        outValue.set(value);
+    }
 }
