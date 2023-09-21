@@ -25,6 +25,8 @@ public static class WidgetProperties
             BaseProperties.InputText("Text", (() => label.Text, x => label.Text = x));
             BaseProperties.InputFont("Font", (() => label.Font, x => label.Font = x));
             BaseProperties.InputColor("Font Color", (() => label.Color, x => label.Color = x));
+            BaseProperties.InputInt("Rotation", (() => label.Rotation, x => label.Rotation = x));
+            BaseProperties.InputBool("Center Lines", (() => label.CenterAllLines, x => label.CenterAllLines = x));
         }
     }
 }
