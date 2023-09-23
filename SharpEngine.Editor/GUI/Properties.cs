@@ -16,6 +16,8 @@ public class Properties: GuiObject
             switch (Selected)
             {
                 case Entity entity:
+                    entity.AddComponentProperties();
+                    ImGui.Separator();
                     entity.DrawProperties();
                     break;
                 case Label label:
