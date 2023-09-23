@@ -26,6 +26,10 @@ public static class EntityProperties
                 ImGui.Separator();
                 transformComponent.DrawProperties();
                 break;
+            case RectComponent rectComponent:
+                ImGui.Separator();
+                rectComponent.DrawProperties();
+                break;
         }
     }
 
@@ -38,5 +42,15 @@ public static class EntityProperties
         BaseProperties.InputFloat("Rotation", (() => component.Rotation, x => component.Rotation = x));
         BaseProperties.InputInt("ZLayer", (() => component.ZLayer, x => component.ZLayer = x));
     }
+
+    public static void DrawProperties(this RectComponent component)
+    {
+        if(!ImGui.CollapsingHeader("RectComponent", ImGuiTreeNodeFlags.DefaultOpen)) return;
+        
+        BaseProperties.InputColor("Color", (() => component.Color, x => component.Color = x));
+        BaseProperties.InputVec2("Size", (() => component.Size, x => component.Size = x));
+        BaseProperties.InputVec2("Offset", (() => component.Offset, x => component.Offset = x));
+        BaseProperties.InputInt("ZLayer Offset", (() => component.ZLayerOffset, x => component.ZLayerOffset = x));
+        BaseProperties.InputBool("Displayed", (() => component.Displayed, x => component.Displayed = x));
     }
 }
