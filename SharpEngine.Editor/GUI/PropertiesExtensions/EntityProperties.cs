@@ -20,18 +20,23 @@ public static class EntityProperties
 
     public static void DrawProperties(this Component component)
     {
-        if(component is TransformComponent transformComponent)
-            transformComponent.DrawProperties();
+        switch (component)
+        {
+            case TransformComponent transformComponent:
+                ImGui.Separator();
+                transformComponent.DrawProperties();
+                break;
+        }
     }
 
     public static void DrawProperties(this TransformComponent component)
     {
-        if (ImGui.CollapsingHeader("TransformComponent", ImGuiTreeNodeFlags.DefaultOpen))
-        {
-            BaseProperties.InputVec2("Position", (() => component.Position, x => component.Position = x));
-            BaseProperties.InputVec2("Scale", (() => component.Scale, x => component.Scale = x));
-            BaseProperties.InputFloat("Rotation", (() => component.Rotation, x => component.Rotation = x));
-            BaseProperties.InputInt("ZLayer", (() => component.ZLayer, x => component.ZLayer = x));
-        }
+        if (!ImGui.CollapsingHeader("TransformComponent", ImGuiTreeNodeFlags.DefaultOpen)) return;
+        
+        BaseProperties.InputVec2("Position", (() => component.Position, x => component.Position = x));
+        BaseProperties.InputVec2("Scale", (() => component.Scale, x => component.Scale = x));
+        BaseProperties.InputFloat("Rotation", (() => component.Rotation, x => component.Rotation = x));
+        BaseProperties.InputInt("ZLayer", (() => component.ZLayer, x => component.ZLayer = x));
+    }
     }
 }
