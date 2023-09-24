@@ -8,7 +8,7 @@ public class MainMenuBar : GuiObject
     {
         if (ImGui.BeginMainMenuBar())
         {
-            if (ImGui.BeginMenu("Projet"))
+            if (ImGui.BeginMenu("Project"))
             {
                 ImGui.MenuItem("Testing");
                 ImGui.EndMenu();
