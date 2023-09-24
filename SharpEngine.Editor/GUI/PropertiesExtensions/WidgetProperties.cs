@@ -7,8 +7,9 @@ public static class WidgetProperties
 {
     public static void DrawProperties(this Widget widget)
     {
-        if (!ImGui.CollapsingHeader("Widget", ImGuiTreeNodeFlags.DefaultOpen)) return;
-        
+        if (!ImGui.CollapsingHeader("Widget", ImGuiTreeNodeFlags.DefaultOpen))
+            return;
+
         ImGui.Text($"Name : {widget.Name}");
         BaseProperties.InputVec2("Position", (() => widget.Position, x => widget.Position = x));
         BaseProperties.InputInt("ZLayer", (() => widget.ZLayer, x => widget.ZLayer = x));
@@ -21,12 +22,16 @@ public static class WidgetProperties
         ((Widget)label).DrawProperties();
         ImGui.Separator();
 
-        if (!ImGui.CollapsingHeader("Label", ImGuiTreeNodeFlags.DefaultOpen)) return;
-        
+        if (!ImGui.CollapsingHeader("Label", ImGuiTreeNodeFlags.DefaultOpen))
+            return;
+
         BaseProperties.InputMultilineText("Text", (() => label.Text, x => label.Text = x));
         BaseProperties.InputFont("Font", (() => label.Font, x => label.Font = x));
         BaseProperties.InputColor("Font Color", (() => label.Color, x => label.Color = x));
         BaseProperties.InputInt("Rotation", (() => label.Rotation, x => label.Rotation = x));
-        BaseProperties.InputBool("Center Lines", (() => label.CenterAllLines, x => label.CenterAllLines = x));
+        BaseProperties.InputBool(
+            "Center Lines",
+            (() => label.CenterAllLines, x => label.CenterAllLines = x)
+        );
     }
 }

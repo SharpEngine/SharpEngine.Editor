@@ -13,7 +13,7 @@ namespace SharpEngine.Editor;
 public class Editor
 {
     public static readonly Core.Scene CurrentScene = new GameScene();
-    
+
     private readonly Window _window;
     private RenderTexture2D _renderTexture;
     private int _windowSizeX;
@@ -24,7 +24,7 @@ public class Editor
     private Properties? _properties;
     private Objects? _sceneTree;
     private AssetsExplorer? _assetsExplorer;
-    
+
     public Editor()
     {
         Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
@@ -40,7 +40,7 @@ public class Editor
         _window.AddScene(new EditorScene(this));
 
         CurrentScene.Window = _window;
-        
+
         _window.Run();
     }
 
@@ -49,7 +49,7 @@ public class Editor
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Loading...");
         CurrentScene.Load();
         _renderTexture = Raylib.LoadRenderTexture(900, 600);
-        
+
         _mainMenuBar = new MainMenuBar();
         _renderWindow = new RenderWindow(_window.SeImGui, _renderTexture);
         _properties = new Properties();
@@ -69,7 +69,7 @@ public class Editor
     private void RenderCurrentScene(Window window)
     {
         CurrentScene.Draw();
-        
+
         Raylib.BeginTextureMode(_renderTexture);
         Raylib.ClearBackground(Color.RED);
         SERender.Draw(window);
@@ -85,14 +85,17 @@ public class Editor
             _windowSizeY = Raylib.GetScreenHeight();
             window.SeImGui.Resize(_windowSizeX, _windowSizeY);
         }
-        
+
         // Render Current Scene
         RenderCurrentScene(window);
-        
+
         // Create ImGui
         _mainMenuBar?.Render();
-        
-        ImGui.DockSpaceOverViewport(ImGui.GetMainViewport(), ImGuiDockNodeFlags.PassthruCentralNode);
+
+        ImGui.DockSpaceOverViewport(
+            ImGui.GetMainViewport(),
+            ImGuiDockNodeFlags.PassthruCentralNode
+        );
         _renderWindow?.Render();
         _sceneTree?.Render();
         _assetsExplorer?.Render();

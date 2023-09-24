@@ -2,7 +2,7 @@ using ImGuiNET;
 
 namespace SharpEngine.Editor.GUI;
 
-public class Objects: GuiObject
+public class Objects : GuiObject
 {
     public override void Render()
     {

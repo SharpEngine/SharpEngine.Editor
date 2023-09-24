@@ -1,6 +1,6 @@
 namespace SharpEngine.Editor.Scene;
 
-public class EditorScene: Core.Scene
+public class EditorScene : Core.Scene
 {
     private readonly Editor _editor;
 
@@ -12,14 +12,14 @@ public class EditorScene: Core.Scene
     public override void Load()
     {
         base.Load();
-        
+
         _editor.Load();
     }
 
     public override void Unload()
     {
         base.Unload();
-        
+
         _editor.Unload();
     }
 }

@@ -4,7 +4,7 @@ using SharpEngine.Core.Utils;
 
 namespace SharpEngine.Editor.GUI;
 
-public class RenderWindow: GuiObject
+public class RenderWindow : GuiObject
 {
     private readonly SeImGui _seImGui;
     private readonly RenderTexture2D _renderTexture;

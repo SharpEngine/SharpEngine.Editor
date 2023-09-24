@@ -10,7 +10,7 @@ public static class EntityProperties
 {
     private static string _component = "Transform";
     private static readonly List<Component> RemovedComponents = new();
-    
+
     public static void AddComponentProperties(this Entity entity)
     {
         ImGui.Columns(2);
@@ -21,7 +21,7 @@ public static class EntityProperties
                     _component = component;
             ImGui.EndCombo();
         }
-        
+
         ImGui.NextColumn();
         if (ImGui.Button("Add Component"))
         {
@@ -35,10 +35,10 @@ public static class EntityProperties
                     break;
             }
         }
-        
+
         ImGui.Columns(1);
     }
-    
+
     public static void DrawProperties(this Entity entity)
     {
         if (ImGui.CollapsingHeader("Entity", ImGuiTreeNodeFlags.DefaultOpen))
@@ -51,7 +51,7 @@ public static class EntityProperties
         var i = 0;
         foreach (var component in entity.Components)
             component.DrawProperties(i++);
-        
+
         foreach (var component in RemovedComponents)
         {
             component.Unload();
@@ -84,22 +84,36 @@ public static class EntityProperties
 
     public static void DrawProperties(this TransformComponent component)
     {
-        if (!ImGui.CollapsingHeader($"Transform", ImGuiTreeNodeFlags.DefaultOpen)) return;
-        
-        BaseProperties.InputVec2("Position", (() => component.Position, x => component.Position = x));
+        if (!ImGui.CollapsingHeader($"Transform", ImGuiTreeNodeFlags.DefaultOpen))
+            return;
+
+        BaseProperties.InputVec2(
+            "Position",
+            (() => component.Position, x => component.Position = x)
+        );
         BaseProperties.InputVec2("Scale", (() => component.Scale, x => component.Scale = x));
-        BaseProperties.InputFloat("Rotation", (() => component.Rotation, x => component.Rotation = x));
+        BaseProperties.InputFloat(
+            "Rotation",
+            (() => component.Rotation, x => component.Rotation = x)
+        );
         BaseProperties.InputInt("ZLayer", (() => component.ZLayer, x => component.ZLayer = x));
     }
 
     public static void DrawProperties(this RectComponent component)
     {
-        if(!ImGui.CollapsingHeader($"Rect", ImGuiTreeNodeFlags.DefaultOpen)) return;
-        
+        if (!ImGui.CollapsingHeader($"Rect", ImGuiTreeNodeFlags.DefaultOpen))
+            return;
+
         BaseProperties.InputColor("Color", (() => component.Color, x => component.Color = x));
         BaseProperties.InputVec2("Size", (() => component.Size, x => component.Size = x));
         BaseProperties.InputVec2("Offset", (() => component.Offset, x => component.Offset = x));
-        BaseProperties.InputInt("ZLayer Offset", (() => component.ZLayerOffset, x => component.ZLayerOffset = x));
-        BaseProperties.InputBool("Displayed", (() => component.Displayed, x => component.Displayed = x));
+        BaseProperties.InputInt(
+            "ZLayer Offset",
+            (() => component.ZLayerOffset, x => component.ZLayerOffset = x)
+        );
+        BaseProperties.InputBool(
+            "Displayed",
+            (() => component.Displayed, x => component.Displayed = x)
+        );
     }
 }

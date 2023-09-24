@@ -5,7 +5,7 @@ using SharpEngine.Editor.GUI.PropertiesExtensions;
 
 namespace SharpEngine.Editor.GUI;
 
-public class Properties: GuiObject
+public class Properties : GuiObject
 {
     public static dynamic? Selected { get; set; }
 
