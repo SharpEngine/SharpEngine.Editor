@@ -5,7 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>≈ <ItemGroup>
+  </PropertyGroup>
+  
+  <ItemGroup>
     <PackageReference Include="SharpEngine.Core" Version="1.4.3" />
   </ItemGroup>
 
