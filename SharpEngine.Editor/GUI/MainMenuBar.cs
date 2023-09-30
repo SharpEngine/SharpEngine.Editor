@@ -10,7 +10,7 @@ public class MainMenuBar : GuiObject
         {
             if (ImGui.BeginMenu("Project"))
             {
-                ImGui.MenuItem("Testing");
+                ImGui.MenuItem("Save");
                 ImGui.EndMenu();
             }
             ImGui.EndMainMenuBar();

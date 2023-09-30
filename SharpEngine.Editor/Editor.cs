@@ -2,6 +2,7 @@ using ImGuiNET;
 using Raylib_cs;
 using SharpEngine.Core;
 using SharpEngine.Core.Manager;
+using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using SharpEngine.Editor.GUI;
@@ -13,6 +14,8 @@ namespace SharpEngine.Editor;
 public class Editor
 {
     public static readonly Core.Scene CurrentScene = new GameScene();
+    public static string? ProjectFolder = null;
+    public static string ProjectName = "";
 
     private readonly Window _window;
     private RenderTexture2D _renderTexture;
@@ -27,6 +30,9 @@ public class Editor
 
     public Editor()
     {
+        if (!Path.Exists("Projects"))
+            Directory.CreateDirectory("Projects");
+
         Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
         _window = new Window(900, 600, "SharpEngine Editor", debug: true, fileLog: true)
         {
@@ -90,15 +96,43 @@ public class Editor
         RenderCurrentScene(window);
 
         // Create ImGui
-        _mainMenuBar?.Render();
+        if (ProjectFolder != null)
+        {
+            _mainMenuBar?.Render();
 
-        ImGui.DockSpaceOverViewport(
-            ImGui.GetMainViewport(),
-            ImGuiDockNodeFlags.PassthruCentralNode
-        );
-        _renderWindow?.Render();
-        _sceneTree?.Render();
-        _assetsExplorer?.Render();
-        _properties?.Render();
+            ImGui.DockSpaceOverViewport(
+                ImGui.GetMainViewport(),
+                ImGuiDockNodeFlags.PassthruCentralNode
+            );
+            _renderWindow?.Render();
+            _sceneTree?.Render();
+            _assetsExplorer?.Render();
+            _properties?.Render();
+        }
+        else
+        {
+            var io = ImGui.GetIO();
+            ImGui.SetNextWindowSize(new Vec2(io.DisplaySize.X / 2f, io.DisplaySize.Y / 2f));
+            ImGui.SetWindowPos(new Vec2(io.DisplaySize.X / 2f, io.DisplaySize.Y / 2f));
+
+            if (
+                ImGui.Begin(
+                    "Projects List",
+                    ImGuiWindowFlags.NoMove
+                        | ImGuiWindowFlags.NoResize
+                        | ImGuiWindowFlags.NoCollapse
+                )
+            )
+            {
+                foreach (var directory in Directory.GetDirectories("Projects"))
+                {
+                    ImGui.Button(directory);
+                }
+                ImGui.Separator();
+                ImGui.InputText("Project Name", ref ProjectName, 90);
+                ImGui.Button("Create");
+                ImGui.End();
+            }
+        }
     }
 }
