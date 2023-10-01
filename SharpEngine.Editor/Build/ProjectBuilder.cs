@@ -1,9 +1,18 @@
 using System.Diagnostics;
+using SharpEngine.Editor.Build.Generator;
+using SharpEngine.Editor.Project.Data;
 
 namespace SharpEngine.Editor.Build;
 
 public static class ProjectBuilder
 {
+    public static void GenerateProject(string projectName, ProjectData projectData)
+    {
+        Directory.SetCurrentDirectory($"Build/{projectName}");
+        new ProgramGenerator().Generate(projectData);
+        Directory.SetCurrentDirectory("../..");
+    }
+
     public static void CreateSolution(string projectName)
     {
         var solutionName = projectName.Replace(" ", "_");
