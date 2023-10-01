@@ -13,6 +13,21 @@ public static class ProjectBuilder
         Directory.SetCurrentDirectory("../..");
     }
 
+    public static void RunProject(string projectName)
+    {
+        Directory.SetCurrentDirectory($"Build/{projectName}");
+        new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "cmd.exe",
+                Arguments = $"/C dotnet run"
+            }
+        }.Start();
+        Directory.SetCurrentDirectory("../..");
+    }
+
     public static void CreateSolution(string projectName)
     {
         var solutionName = projectName.Replace(" ", "_");

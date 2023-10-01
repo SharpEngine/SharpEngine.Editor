@@ -21,6 +21,9 @@ public class MainMenuBar : GuiObject
                         JsonSerializer.Deserialize<ProjectData>(
                             File.ReadAllText($"Projects/{Editor.ProjectName}/project.json")
                         )
+                    );
+                if (ImGui.MenuItem("Run"))
+                    ProjectBuilder.RunProject(Editor.ProjectName);
                 ImGui.EndMenu();
             }
             ImGui.EndMainMenuBar();
