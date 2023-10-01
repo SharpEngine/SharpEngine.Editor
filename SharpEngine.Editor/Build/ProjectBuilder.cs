@@ -36,7 +36,7 @@ public static class ProjectBuilder
 
         Directory.SetCurrentDirectory("Build");
 
-        var process = new Process
+        var createProcess = new Process
         {
             StartInfo = new ProcessStartInfo
             {
@@ -45,8 +45,21 @@ public static class ProjectBuilder
                 Arguments = $"/C dotnet new console -n {solutionName}"
             }
         };
-        process.Start();
+        createProcess.Start();
+        createProcess.WaitForExit();
 
-        Directory.SetCurrentDirectory("..");
+        Directory.SetCurrentDirectory(solutionName);
+
+        new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "cmd.exe",
+                Arguments = "/C dotnet add package SharpEngine.Core -v 1.4.3"
+            }
+        }.Start();
+
+        Directory.SetCurrentDirectory("../..");
     }
 }
