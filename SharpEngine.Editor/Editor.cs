@@ -1,3 +1,4 @@
+using System.Text.Json;
 using ImGuiNET;
 using Raylib_cs;
 using SharpEngine.Core;
@@ -5,7 +6,9 @@ using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
+using SharpEngine.Editor.Build;
 using SharpEngine.Editor.GUI;
+using SharpEngine.Editor.Project.Data;
 using SharpEngine.Editor.Scene;
 using Color = Raylib_cs.Color;
 
@@ -16,6 +19,7 @@ public class Editor
     public static readonly Core.Scene CurrentScene = new GameScene();
     public static string? ProjectFolder = null;
     public static string ProjectName = "";
+    public static bool Exists = false;
 
     private readonly Window _window;
     private RenderTexture2D _renderTexture;
@@ -126,11 +130,39 @@ public class Editor
             {
                 foreach (var directory in Directory.GetDirectories("Projects"))
                 {
-                    ImGui.Button(directory);
+                    if (ImGui.Button(Path.GetFileName(directory)))
+                        ProjectFolder = directory;
                 }
                 ImGui.Separator();
+                if (Exists)
+                    ImGui.TextColored(
+                        SharpEngine.Core.Utils.Color.Red.ToVec4(),
+                        "Project already exists !"
+                    );
                 ImGui.InputText("Project Name", ref ProjectName, 90);
-                ImGui.Button("Create");
+                if (ImGui.Button("Create"))
+                {
+                    if (Directory.Exists($"Projects/{ProjectName}"))
+                        Exists = true;
+                    else
+                    {
+                        Directory.CreateDirectory($"Projects/{ProjectName}");
+                        File.WriteAllText(
+                            $"Projects/{ProjectName}/project.json",
+                            JsonSerializer.Serialize(
+                                new ProjectData
+                                {
+                                    Width = 900,
+                                    Height = 600,
+                                    Title = ProjectName,
+                                    Scenes = new List<string>()
+                                }
+                            )
+                        );
+                        ProjectBuilder.CreateSolution(ProjectName);
+                        ProjectFolder = $"Projects/{ProjectName}";
+                    }
+                }
                 ImGui.End();
             }
         }
