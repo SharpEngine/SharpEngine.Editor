@@ -155,6 +155,7 @@ public class Editor
                                     Width = 900,
                                     Height = 600,
                                     Title = ProjectName,
+                                    CurrentScene = 0,
                                     Scenes = new List<string>()
                                 }
                             )
