@@ -15,15 +15,17 @@ public class MainMenuBar : GuiObject
             {
                 ImGui.MenuItem("Save");
                 ImGui.Separator();
-                if (ImGui.MenuItem("Generate C#"))
+                if (ImGui.MenuItem("Run"))
+                {
                     ProjectBuilder.GenerateProject(
                         Editor.ProjectName,
                         JsonSerializer.Deserialize<ProjectData>(
                             File.ReadAllText($"Projects/{Editor.ProjectName}/project.json")
                         )
                     );
-                if (ImGui.MenuItem("Run"))
                     ProjectBuilder.RunProject(Editor.ProjectName);
+                }
+
                 ImGui.EndMenu();
             }
             ImGui.EndMainMenuBar();
