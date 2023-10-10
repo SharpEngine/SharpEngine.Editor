@@ -131,7 +131,10 @@ public class Editor
                 foreach (var directory in Directory.GetDirectories("Projects"))
                 {
                     if (ImGui.Button(Path.GetFileName(directory)))
+                    {
+                        ProjectName = Path.GetFileName(directory);
                         ProjectFolder = directory;
+                    }
                 }
                 ImGui.Separator();
                 if (Exists)
