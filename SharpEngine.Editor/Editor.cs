@@ -19,10 +19,12 @@ public class Editor
     public static readonly Core.Scene CurrentScene = new GameScene();
     public static string? ProjectFolder = null;
     public static string ProjectName = "";
-    public static bool Exists = false;
+    public static ProjectData ProjectData = new();
+
+    private static bool _exists = false;
+    private static RenderTexture2D _renderTexture;
 
     private readonly Window _window;
-    private RenderTexture2D _renderTexture;
     private int _windowSizeX;
     private int _windowSizeY;
 
@@ -76,12 +78,18 @@ public class Editor
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Unloaded !");
     }
 
+    public static void UpdateRenderSize()
+    {
+        Raylib.UnloadRenderTexture(_renderTexture);
+        _renderTexture = Raylib.LoadRenderTexture(ProjectData.Width, ProjectData.Height);
+    }
+
     private void RenderCurrentScene(Window window)
     {
         CurrentScene.Draw();
 
         Raylib.BeginTextureMode(_renderTexture);
-        Raylib.ClearBackground(Color.RED);
+        Raylib.ClearBackground(ProjectData.BackgroundColor);
         SERender.Draw(window);
         Raylib.EndTextureMode();
     }
@@ -134,10 +142,14 @@ public class Editor
                     {
                         ProjectName = Path.GetFileName(directory);
                         ProjectFolder = directory;
+                        ProjectData = JsonSerializer.Deserialize<ProjectData>(
+                            File.ReadAllText($"Projects/{ProjectName}/project.json")
+                        );
+                        UpdateRenderSize();
                     }
                 }
                 ImGui.Separator();
-                if (Exists)
+                if (_exists)
                     ImGui.TextColored(
                         SharpEngine.Core.Utils.Color.Red.ToVec4(),
                         "Project already exists !"
@@ -146,22 +158,22 @@ public class Editor
                 if (ImGui.Button("Create"))
                 {
                     if (Directory.Exists($"Projects/{ProjectName}"))
-                        Exists = true;
+                        _exists = true;
                     else
                     {
+                        ProjectData = new ProjectData
+                        {
+                            Width = 900,
+                            Height = 600,
+                            Title = ProjectName,
+                            BackgroundColor = Core.Utils.Color.Black,
+                            CurrentScene = 0,
+                            Scenes = new List<string>()
+                        };
                         Directory.CreateDirectory($"Projects/{ProjectName}");
                         File.WriteAllText(
                             $"Projects/{ProjectName}/project.json",
-                            JsonSerializer.Serialize(
-                                new ProjectData
-                                {
-                                    Width = 900,
-                                    Height = 600,
-                                    Title = ProjectName,
-                                    CurrentScene = 0,
-                                    Scenes = new List<string>()
-                                }
-                            )
+                            JsonSerializer.Serialize(ProjectData)
                         );
                         ProjectBuilder.CreateSolution(ProjectName);
                         ProjectFolder = $"Projects/{ProjectName}";

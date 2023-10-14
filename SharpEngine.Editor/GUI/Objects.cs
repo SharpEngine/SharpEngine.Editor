@@ -35,6 +35,12 @@ public class Objects : GuiObject
                 RenderAddWidget();
             }
 
+            if (ImGui.CollapsingHeader("Others", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                if (ImGui.Selectable("Window"))
+                    Properties.Selected = Editor.ProjectData;
+            }
+
             ImGui.End();
         }
     }

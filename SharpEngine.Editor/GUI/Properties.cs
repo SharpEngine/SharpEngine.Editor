@@ -2,6 +2,7 @@ using ImGuiNET;
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Widget;
 using SharpEngine.Editor.GUI.PropertiesExtensions;
+using SharpEngine.Editor.Project.Data;
 
 namespace SharpEngine.Editor.GUI;
 
@@ -25,6 +26,9 @@ public class Properties : GuiObject
                     break;
                 case Widget widget:
                     widget.DrawProperties();
+                    break;
+                case ProjectData projectData:
+                    projectData.DrawProperties();
                     break;
             }
 

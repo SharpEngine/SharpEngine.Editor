@@ -13,16 +13,17 @@ public class MainMenuBar : GuiObject
         {
             if (ImGui.BeginMenu("Project"))
             {
-                ImGui.MenuItem("Save");
-                ImGui.Separator();
-                if (ImGui.MenuItem("Run"))
+                if (ImGui.MenuItem("Save Project"))
                 {
-                    ProjectBuilder.GenerateProject(
-                        Editor.ProjectName,
-                        JsonSerializer.Deserialize<ProjectData>(
-                            File.ReadAllText($"Projects/{Editor.ProjectName}/project.json")
-                        )
+                    File.WriteAllText(
+                        $"Projects/{Editor.ProjectName}/project.json",
+                        JsonSerializer.Serialize(Editor.ProjectData)
                     );
+                }
+                ImGui.Separator();
+                if (ImGui.MenuItem("Run Project"))
+                {
+                    ProjectBuilder.GenerateProject(Editor.ProjectName, Editor.ProjectData);
                     ProjectBuilder.RunProject(Editor.ProjectName);
                 }
 
