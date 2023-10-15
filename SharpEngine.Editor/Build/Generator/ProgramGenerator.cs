@@ -4,19 +4,20 @@ namespace SharpEngine.Editor.Build.Generator;
 
 public class ProgramGenerator : FileGenerator<ProjectData>
 {
-    protected override string FilePath() => "Program.cs";
+    public override string FilePath() => "Program.cs";
 
-    protected override string GetCode(ProjectData data) =>
+    public override string GetCode(ProjectData data) =>
         $$"""
           using SharpEngine.Core;
+          using SharpEngine.Core.Utils;
 
-          namespace BasicWindow;
+          namespace {{data.Title.Replace(" ", ".")}};
 
           internal static class Program
           {
               private static void Main()
               {
-                  var window = new Window({{data.Width}}, {{data.Height}}, "{{data.Title}}");
+                  var window = new Window({{data.Width}}, {{data.Height}}, "{{data.Title}}", {{Generators.ColorConstructor.GetCode(data.BackgroundColor)}});
           
                   window.AddScene(new Scene());
           

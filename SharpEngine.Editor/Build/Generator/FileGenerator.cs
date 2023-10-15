@@ -7,6 +7,6 @@ public abstract class FileGenerator<T>
         File.WriteAllText(FilePath(), GetCode(data));
     }
 
-    protected abstract string FilePath();
-    protected abstract string GetCode(T data);
+    public abstract string FilePath();
+    public abstract string GetCode(T data);
 }

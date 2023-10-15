@@ -9,7 +9,7 @@ public static class ProjectBuilder
     public static void GenerateProject(string projectName, ProjectData projectData)
     {
         Directory.SetCurrentDirectory($"Build/{projectName}");
-        new ProgramGenerator().Generate(projectData);
+        Generators.Program.Generate(projectData);
         Directory.SetCurrentDirectory("../..");
     }
 
