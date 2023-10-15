@@ -80,8 +80,8 @@ public class Editor
 
     public static void UpdateRenderSize()
     {
-        Raylib.UnloadRenderTexture(_renderTexture);
-        _renderTexture = Raylib.LoadRenderTexture(ProjectData.Width, ProjectData.Height);
+        _renderTexture.texture.width = ProjectData.Width;
+        _renderTexture.texture.height = ProjectData.Height;
     }
 
     private void RenderCurrentScene(Window window)
