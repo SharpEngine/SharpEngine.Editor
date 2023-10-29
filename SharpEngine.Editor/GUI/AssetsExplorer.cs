@@ -1,4 +1,5 @@
 using ImGuiNET;
+using SharpEngine.Editor.GUI.PropertiesExtensions;
 
 namespace SharpEngine.Editor.GUI;
 
