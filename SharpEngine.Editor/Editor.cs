@@ -10,7 +10,6 @@ using SharpEngine.Editor.Build;
 using SharpEngine.Editor.GUI;
 using SharpEngine.Editor.Project.Data;
 using SharpEngine.Editor.Scene;
-using Color = Raylib_cs.Color;
 
 namespace SharpEngine.Editor;
 
@@ -142,6 +141,7 @@ public class Editor
                     {
                         ProjectName = Path.GetFileName(directory);
                         ProjectFolder = directory;
+                        AssetsExplorer.CurrentPath = ProjectFolder;
                         ProjectData = JsonSerializer.Deserialize<ProjectData>(
                             File.ReadAllText($"Projects/{ProjectName}/project.json")
                         );
@@ -150,10 +150,7 @@ public class Editor
                 }
                 ImGui.Separator();
                 if (_exists)
-                    ImGui.TextColored(
-                        SharpEngine.Core.Utils.Color.Red.ToVec4(),
-                        "Project already exists !"
-                    );
+                    ImGui.TextColored(Core.Utils.Color.Red.ToVec4(), "Project already exists !");
                 ImGui.InputText("Project Name", ref ProjectName, 90);
                 if (ImGui.Button("Create"))
                 {
@@ -177,6 +174,7 @@ public class Editor
                         );
                         ProjectBuilder.CreateSolution(ProjectName);
                         ProjectFolder = $"Projects/{ProjectName}";
+                        AssetsExplorer.CurrentPath = ProjectFolder;
                     }
                 }
                 ImGui.End();
