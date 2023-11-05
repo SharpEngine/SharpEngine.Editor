@@ -11,7 +11,7 @@ public class AssetsExplorer : GuiObject
 
     public override void Render()
     {
-        if (ImGui.Begin("Assets Explorer"))
+        if (ImGui.Begin("Assets Explorer - " + CurrentPath))
         {
             if (ImGui.BeginPopupContextItem("context_asset_menu"))
             {
@@ -20,18 +20,38 @@ public class AssetsExplorer : GuiObject
                     (() => _directionName, (name) => _directionName = name)
                 );
                 if (ImGui.Button("Create Directory"))
-                    Directory.CreateDirectory(CurrentPath + "/" + _directionName);
+                    Directory.CreateDirectory(
+                        CurrentPath + Path.DirectorySeparatorChar + _directionName
+                    );
 
                 ImGui.EndPopup();
             }
 
             if (CurrentPath != null)
             {
+                if (CurrentPath != Editor.ProjectFolder)
+                {
+                    if (ImGui.Button(".."))
+                        CurrentPath = Path.GetRelativePath(
+                            ".",
+                            Directory.GetParent(CurrentPath)?.FullName
+                                ?? Editor.ProjectFolder
+                                ?? "."
+                        );
+                }
+
                 foreach (var path in Directory.EnumerateDirectories(CurrentPath))
-                    ImGui.Button("D-" + path);
+                {
+                    var directoryName = Path.GetFileName(path);
+                    if (ImGui.Button(directoryName))
+                        CurrentPath += Path.DirectorySeparatorChar + directoryName;
+                }
 
                 foreach (var path in Directory.EnumerateFiles(CurrentPath))
-                    ImGui.Button("F-" + path);
+                {
+                    var fileName = Path.GetFileName(path);
+                    ImGui.Button(fileName);
+                }
             }
 
             ImGui.End();
