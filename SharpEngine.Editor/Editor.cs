@@ -79,8 +79,8 @@ public class Editor
 
     public static void UpdateRenderSize()
     {
-        _renderTexture.texture.width = ProjectData.Width;
-        _renderTexture.texture.height = ProjectData.Height;
+        _renderTexture.Texture.Width = ProjectData.Width;
+        _renderTexture.Texture.Height = ProjectData.Height;
     }
 
     private void RenderCurrentScene(Window window)

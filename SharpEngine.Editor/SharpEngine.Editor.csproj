@@ -8,7 +8,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="SharpEngine.Core" Version="1.5.0" />
+    <PackageReference Include="SharpEngine.Core" Version="1.5.1" />
   </ItemGroup>
 
   <!-- set HUSKY to 0 in CI/CD disable this -->
