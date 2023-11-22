@@ -56,7 +56,7 @@ public static class ProjectBuilder
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = "cmd.exe",
-                Arguments = "/C dotnet add package SharpEngine.Core -v 1.4.3"
+                Arguments = "/C dotnet add package SharpEngine.Core -v 1.6.0"
             }
         }.Start();
 
