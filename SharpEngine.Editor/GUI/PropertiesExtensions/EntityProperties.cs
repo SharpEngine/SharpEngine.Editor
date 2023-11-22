@@ -9,7 +9,7 @@ namespace SharpEngine.Editor.GUI.PropertiesExtensions;
 public static class EntityProperties
 {
     private static string _component = "Transform";
-    private static readonly List<Component> RemovedComponents = new();
+    private static readonly List<Component> RemovedComponents = [];
 
     public static void AddComponentProperties(this Entity entity)
     {

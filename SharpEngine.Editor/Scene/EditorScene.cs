@@ -1,13 +1,8 @@
 namespace SharpEngine.Editor.Scene;
 
-public class EditorScene : Core.Scene
+public class EditorScene(Editor editor) : Core.Scene
 {
-    private readonly Editor _editor;
-
-    public EditorScene(Editor editor)
-    {
-        _editor = editor;
-    }
+    private readonly Editor _editor = editor;
 
     public override void Load()
     {

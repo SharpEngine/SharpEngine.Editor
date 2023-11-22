@@ -4,7 +4,7 @@ namespace SharpEngine.Editor.Project.Data;
 
 public class EntityData
 {
-    public string Name { get; set; }
-    public string Tag { get; set; }
-    public List<IComponentData> Components { get; set; }
+    public required string Name { get; set; }
+    public required string Tag { get; set; }
+    public required List<IComponentData> Components { get; set; }
 }

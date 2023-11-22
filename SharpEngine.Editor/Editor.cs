@@ -15,10 +15,14 @@ namespace SharpEngine.Editor;
 
 public class Editor
 {
-    public static readonly Core.Scene CurrentScene = new GameScene();
-    public static string? ProjectFolder = null;
-    public static string ProjectName = "";
-    public static ProjectData ProjectData = new();
+    internal static readonly Core.Scene CurrentScene = new GameScene();
+    internal static string? ProjectFolder = null;
+    internal static string ProjectName = "";
+    internal static ProjectData ProjectData = new()
+    {
+        Title = "",
+        Scenes = []
+    };
 
     private static bool _exists = false;
     private static RenderTexture2D _renderTexture;
@@ -165,7 +169,7 @@ public class Editor
                             Title = ProjectName,
                             BackgroundColor = Core.Utils.Color.Black,
                             CurrentScene = 0,
-                            Scenes = new List<string>()
+                            Scenes = []
                         };
                         Directory.CreateDirectory($"Projects/{ProjectName}");
                         File.WriteAllText(
