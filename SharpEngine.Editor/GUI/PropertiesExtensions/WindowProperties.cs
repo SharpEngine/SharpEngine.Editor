@@ -16,7 +16,7 @@ public static class WindowProperties
                 x =>
                 {
                     project.Width = x;
-                    Editor.UpdateRenderSize();
+                    Editor.Instance?.UpdateRenderSize();
                 }
             )
         );
@@ -27,7 +27,7 @@ public static class WindowProperties
                 x =>
                 {
                     project.Height = x;
-                    Editor.UpdateRenderSize();
+                    Editor.Instance?.UpdateRenderSize();
                 }
             )
         );

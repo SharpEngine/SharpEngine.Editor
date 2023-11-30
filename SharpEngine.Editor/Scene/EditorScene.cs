@@ -15,6 +15,6 @@ public class EditorScene(Editor editor) : Core.Scene
     {
         base.Unload();
 
-        Editor.Unload();
+        _editor.Unload();
     }
 }

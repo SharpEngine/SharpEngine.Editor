@@ -15,6 +15,8 @@ namespace SharpEngine.Editor;
 
 public class Editor
 {
+    internal static Editor? Instance { get; private set; }
+
     internal static readonly Core.Scene CurrentScene = new GameScene();
     internal static string? ProjectFolder { get; set; } = null;
     internal static string ProjectName { get; set; } = "";
@@ -25,7 +27,7 @@ public class Editor
     };
 
     private static bool _exists { get; set; } = false;
-    private static RenderTexture2D _renderTexture;
+    private RenderTexture2D _renderTexture;
 
     private int _windowSizeX;
     private int _windowSizeY;
@@ -38,6 +40,8 @@ public class Editor
 
     public Editor()
     {
+        Instance = this;
+
         if (!Path.Exists("Projects"))
             Directory.CreateDirectory("Projects");
 
@@ -72,7 +76,7 @@ public class Editor
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Loaded !");
     }
 
-    public static void Unload()
+    public void Unload()
     {
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Unloading...");
         Raylib.UnloadRenderTexture(_renderTexture);
@@ -80,13 +84,13 @@ public class Editor
         DebugManager.Log(LogLevel.LogInfo, "EDITOR: Unloaded !");
     }
 
-    public static void UpdateRenderSize()
+    public void UpdateRenderSize()
     {
         _renderTexture.Texture.Width = ProjectData.Width;
         _renderTexture.Texture.Height = ProjectData.Height;
     }
 
-    private static void RenderCurrentScene(Window window)
+    private void RenderCurrentScene(Window window)
     {
         CurrentScene.Draw();
 
