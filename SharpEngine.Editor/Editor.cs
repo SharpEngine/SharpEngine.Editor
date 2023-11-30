@@ -66,7 +66,7 @@ public class Editor
         _renderTexture = Raylib.LoadRenderTexture(900, 600);
 
         _mainMenuBar = new MainMenuBar();
-        _renderWindow = new RenderWindow(_window.SeImGui, _renderTexture);
+        _renderWindow = new RenderWindow(_renderTexture);
         _properties = new Properties();
         _sceneTree = new Objects();
         _assetsExplorer = new AssetsExplorer();

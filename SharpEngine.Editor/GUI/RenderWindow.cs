@@ -6,12 +6,10 @@ namespace SharpEngine.Editor.GUI;
 
 public class RenderWindow : GuiObject
 {
-    private readonly SeImGui _seImGui;
     private readonly RenderTexture2D _renderTexture;
 
-    public RenderWindow(SeImGui seImGui, RenderTexture2D renderTexture)
+    public RenderWindow(RenderTexture2D renderTexture)
     {
-        _seImGui = seImGui;
         _renderTexture = renderTexture;
     }
 
@@ -19,7 +17,7 @@ public class RenderWindow : GuiObject
     {
         if (ImGui.Begin("Render"))
         {
-            _seImGui.ImageRenderTexture(_renderTexture);
+            SeImGui.ImageRenderTexture(_renderTexture);
 
             ImGui.End();
         }
