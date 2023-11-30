@@ -10,15 +10,15 @@ public static class EntityProperties
 {
     private static string _component = "Transform";
     private static readonly List<Component> RemovedComponents = [];
+    private static readonly string[] _selectableComponents = ["Transform", "Rect"];
 
     public static void AddComponentProperties(this Entity entity)
     {
         ImGui.Columns(2);
         if (ImGui.BeginCombo("Component", _component))
         {
-            foreach (var component in new[] { "Transform", "Rect" })
-                if (ImGui.Selectable(component, _component == component))
-                    _component = component;
+            foreach (var component in _selectableComponents.Where(x => ImGui.Selectable(x, _component == x)))
+                _component = component;
             ImGui.EndCombo();
         }
 
@@ -74,14 +74,6 @@ public static class EntityProperties
         ImGui.PopID();
     }
 
-    public static void DrawComponentProperties(this Component component, Action drawProperties)
-    {
-        ImGui.Separator();
-        drawProperties();
-        if (ImGui.Button("Delete Component"))
-            RemovedComponents.Add(component);
-    }
-
     public static void DrawProperties(this TransformComponent component)
     {
         if (!ImGui.CollapsingHeader($"Transform", ImGuiTreeNodeFlags.DefaultOpen))
@@ -115,5 +107,13 @@ public static class EntityProperties
             "Displayed",
             (() => component.Displayed, x => component.Displayed = x)
         );
+    }
+
+    public static void DrawComponentProperties(this Component component, Action drawProperties)
+    {
+        ImGui.Separator();
+        drawProperties();
+        if (ImGui.Button("Delete Component"))
+            RemovedComponents.Add(component);
     }
 }

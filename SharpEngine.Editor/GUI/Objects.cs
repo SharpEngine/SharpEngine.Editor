@@ -7,45 +7,40 @@ namespace SharpEngine.Editor.GUI;
 
 public class Objects : GuiObject
 {
-    private static string _widget = "Label";
+    private static string _widget { get; set; } = "Label";
     private static string _widgetName = "";
     private static string _entityName = "";
+    private static readonly string[] _selectableWidgets = ["Label", "ColorRect"];
 
     public override void Render()
     {
-        if (ImGui.Begin("Objects"))
+        ImGui.Begin("Objects");
+        
+        if (ImGui.CollapsingHeader("Entities", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            if (ImGui.CollapsingHeader("Entities", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                foreach (var entity in Editor.CurrentScene.Entities)
-                    if (ImGui.Selectable(entity.Name))
-                        Properties.Selected = entity;
+            foreach (var entity in Editor.CurrentScene.Entities.Where(x => ImGui.Selectable(x.Name)))
+                Properties.Selected = entity;
 
-                ImGui.Separator();
-                RenderAddEntity();
-            }
-
-            if (ImGui.CollapsingHeader("Widgets", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                foreach (var widget in Editor.CurrentScene.Widgets)
-                    if (ImGui.Selectable(widget.Name))
-                        Properties.Selected = widget;
-
-                ImGui.Separator();
-                RenderAddWidget();
-            }
-
-            if (ImGui.CollapsingHeader("Others", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                if (ImGui.Selectable("Window"))
-                    Properties.Selected = Editor.ProjectData;
-            }
-
-            ImGui.End();
+            ImGui.Separator();
+            RenderAddEntity();
         }
+
+        if (ImGui.CollapsingHeader("Widgets", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            foreach (var widget in Editor.CurrentScene.Widgets.Where(x => ImGui.Selectable(x.Name)))
+                Properties.Selected = widget;
+
+            ImGui.Separator();
+            RenderAddWidget();
+        }
+
+        if (ImGui.CollapsingHeader("Others", ImGuiTreeNodeFlags.DefaultOpen) && ImGui.Selectable("Window"))
+            Properties.Selected = Editor.ProjectData;
+
+        ImGui.End();
     }
 
-    public void RenderAddEntity()
+    public static void RenderAddEntity()
     {
         ImGui.Columns(2);
         ImGui.InputText("Entity Name", ref _entityName, 90);
@@ -61,15 +56,14 @@ public class Objects : GuiObject
         ImGui.Columns(1);
     }
 
-    public void RenderAddWidget()
+    public static void RenderAddWidget()
     {
         ImGui.InputText("Widget Name", ref _widgetName, 90);
         ImGui.Columns(2);
         if (ImGui.BeginCombo("Widget", _widget))
         {
-            foreach (var widget in new[] { "Label", "ColorRect" })
-                if (ImGui.Selectable(widget, _widget == widget))
-                    _widget = widget;
+            foreach (var widget in _selectableWidgets.Where(x => ImGui.Selectable(x, _widget == x)))
+                _widget = widget;
             ImGui.EndCombo();
         }
 
