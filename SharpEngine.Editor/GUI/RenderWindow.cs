@@ -1,6 +1,6 @@
 using ImGuiNET;
 using Raylib_cs;
-using SharpEngine.Core.Utils;
+using SharpEngine.Core.Utils.SeImGui;
 
 namespace SharpEngine.Editor.GUI;
 
