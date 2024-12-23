@@ -45,7 +45,7 @@ public class Editor
         if (!Path.Exists("Projects"))
             Directory.CreateDirectory("Projects");
 
-        Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+        Raylib.SetConfigFlags(ConfigFlags.ResizableWindow);
         var window = new Window(900, 600, "SharpEngine Editor", debug: true, fileLog: true)
         {
             RenderImGui = RenderImGui
@@ -119,8 +119,8 @@ public class Editor
             _mainMenuBar?.Render();
 
             ImGui.DockSpaceOverViewport(
-                ImGui.GetMainViewport(),
-                ImGuiDockNodeFlags.PassthruCentralNode
+                0,
+                ImGui.GetMainViewport()
             );
             _renderWindow?.Render();
             _sceneTree?.Render();
